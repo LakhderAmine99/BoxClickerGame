@@ -14,7 +14,7 @@ html,body{
 #app{
     height: 100%;
     width: 100%;
-    background-color: rgb(14, 183, 113);
+    background-color: rgba(3, 165, 103, 0.945);
 }
 
 main{
@@ -24,15 +24,71 @@ main{
 }
 
 .box{
-    background-color: rgb(255, 43, 43);
+    background-color: rgb(255, 94, 76);
+    /* background-color: rgb(104, 222, 0); */
     cursor: pointer;
     border-radius: 0.5rem;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.421);
     /* box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.421); */
-    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1); */
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
     /* transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
 
 .box:hover{
-    opacity: 0.5;
+    opacity: 0.5 !important;
+}
+
+.box:active{
+    background-color: rgb(255, 0, 0);
+}
+
+.pause-screen{
+
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.811);
+    z-index: 3;
+}
+
+.play-btn{
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: none;
+    transform: translateX(-50%) translateY(-50%);
+    outline: none;
+    border-radius: 0.25rem;
+    border: 1px solid rgb(136, 255, 0);
+    color: rgb(166, 255, 0);
+    background: linear-gradient(to left,rgba(88, 159, 0, 0.748),rgba(1, 164, 4, 0.732),rgba(66, 158, 0, 0.501));
+    padding: 1.45rem 7rem;
+    font-size: 48px;
+    z-index: 5;
+    width: fit-content;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.score{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.441);
+    font-size: 20px;
+    padding: 0.8rem;
+    width: fit-content;
+    color: rgb(241, 241, 241);
+}
+
+.visible{
+    display: block;
+}
+
+.play-btn:hover{
+
+    background-position: 275px;
+    top: 48%;
 }

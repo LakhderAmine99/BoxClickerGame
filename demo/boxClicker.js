@@ -8,16 +8,49 @@ function BoxClickerGame(){
     const wrapper = document.querySelector('.wrapper');
 
     /**
+     * @type {HTMLDivElement} pauseScreen
+     */
+    const pauseScreen = document.querySelector('.pause-screen');
+
+    /**
+     * @type {HTMLDivElement} scorePanel
+     */
+    const scorePanel = document.querySelector('.score');
+
+    /**
+     * @type {HTMLButtonElement} playBtn
+     */
+    const playBtn = document.getElementById('play-btn');
+
+    /**
      * @type {HTMLDivElement} boxElement
      */
     let boxElement = null;
+
+    /**
+     * @type {Function}
+     */
+    let playingTimeOut = null;
 
     /**
      * @type {Box} box
      */
     let box = null;
 
+    /**
+     * @type {boolean} isClicked
+     */
     let isClicked = false;
+
+    /**
+     * @type {boolean} isGameStarted
+     */
+    let isGameStarted = false;
+
+    /**
+     * @type {number} score
+     */
+    let score = 0;
 
     this.run = function(){
         console.log("Box Clicker is up and running...");
@@ -25,23 +58,6 @@ function BoxClickerGame(){
         init();
 
         handleEvents();
-
-        let x,y;
-
-        window.setInterval(function(){
-
-            [x,y] = randomVector();
-
-            updateBox(x,y);
-
-            if(isClicked){
-
-                alert("box clicked !");
-                isClicked = false;
-            }
-            
-        },1000);
-
     };
 
     /**
@@ -58,11 +74,69 @@ function BoxClickerGame(){
 
     /**
      * 
+     */
+    function startPlaying(){
+
+        let x,y;
+
+        playingTimeOut = window.setTimeout(function(){
+            
+            [x,y] = randomVector();
+
+            updateBox(x,y);
+            boxElement.style.opacity = 0;
+            
+        },2000);
+
+        window.setTimeout(function(){
+
+            boxElement.style.opacity = 1;
+
+        },2500);
+
+        window.setTimeout(function(){
+
+            if(!isClicked){
+
+                isGameStarted = false;
+                pauseScreen.style.display = "block"
+                playBtn.innerHTML = "Restart";
+                playBtn.classList.add('visible');
+
+                score = 0;
+                scorePanel.innerHTML = "Score : "+score;
+
+                stopPlaying();
+
+            }else{
+
+                score += 10;
+                scorePanel.innerHTML = "Score : "+score;
+   
+                isClicked = false;
+            }
+
+        },4000);
+
+        window.clearTimeout(6500);
+    }
+
+    /**
+     * 
+     */
+    function stopPlaying(){
+
+        window.clearTimeout(playingTimeOut);
+        playingTimeOut = null;
+    }
+
+    /**
+     * 
      * @returns Returns x and y cordinates of the box element.
      */
     function randomVector(){
 
-        return [Math.abs(Math.floor(Math.random() * window.innerWidth) - 50),Math.abs(Math.floor(Math.random() * window.innerHeight) - 50)];
+        return [Math.abs(Math.floor(Math.random() * window.innerWidth) - box.size),Math.abs(Math.floor(Math.random() * window.innerHeight) - box.size)];
     }
 
     /**
@@ -95,6 +169,7 @@ function BoxClickerGame(){
 
         boxElement.style.left = x + "px";
         boxElement.style.top = y + "px";
+
     };
 
     /**
@@ -102,16 +177,51 @@ function BoxClickerGame(){
      */
     function handleEvents(){
 
+        playBtn.addEventListener('click',handleGameStart,false);
+        window.addEventListener('dblclick',handleGamePause,false);
         boxElement.addEventListener('click',handleBoxClick,false);
     };
 
     /**
      * 
-     * @param {Event} e 
+     * @param {Event} e
+     * @handler
      */
     function handleBoxClick(e){
 
+        window.clearTimeout(playingTimeOut);
+
         isClicked = true;
+
+        startPlaying();
+    };
+
+    /**
+     * 
+     * @param {Event} e 
+     * @handler
+     */
+    function handleGameStart(e){
+
+        isGameStarted = true;
+        pauseScreen.style.display = "none"
+        playBtn.classList.remove('visible');
+
+        startPlaying();
+    }
+
+    /**
+     * 
+     * @param {Event} e
+     * @handler
+     */
+     function handleGamePause(e){
+
+        isGameStarted = false;
+        pauseScreen.style.display = "block"
+        playBtn.classList.add('visible');
+
+        stopPlaying();
     };
 };
 
