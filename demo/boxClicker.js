@@ -79,46 +79,30 @@ function BoxClickerGame(){
 
         let x,y;
 
+        boxElement.style.opacity = 0;
+
         playingTimeOut = window.setTimeout(function(){
             
             [x,y] = randomVector();
 
             updateBox(x,y);
-            boxElement.style.opacity = 0;
             
-        },2000);
+        },Math.floor(Math.random()*3000));
 
-        window.setTimeout(function(){
+        if(isClicked){
 
-            boxElement.style.opacity = 1;
+            isClicked = false;
+            score += 10;
+            scorePanel.innerHTML = "Score : "+score;
 
-        },2500);
+        }else{
 
-        window.setTimeout(function(){
+            window.setTimeout(stopPlaying,playingTimeOut*1000 + 1000);
+        }
 
-            if(!isClicked){
+        window.clearTimeout(playingTimeOut*2*1000);
 
-                isGameStarted = false;
-                pauseScreen.style.display = "block"
-                playBtn.innerHTML = "Restart";
-                playBtn.classList.add('visible');
-
-                score = 0;
-                scorePanel.innerHTML = "Score : "+score;
-
-                stopPlaying();
-
-            }else{
-
-                score += 10;
-                scorePanel.innerHTML = "Score : "+score;
-   
-                isClicked = false;
-            }
-
-        },4000);
-
-        window.clearTimeout(6500);
+        return;
     }
 
     /**
@@ -126,8 +110,16 @@ function BoxClickerGame(){
      */
     function stopPlaying(){
 
+        isGameStarted = false;
+        
+        pauseScreen.style.display = "block"
+        playBtn.classList.add('visible');
+        
         window.clearTimeout(playingTimeOut);
         playingTimeOut = null;
+        
+        score = 0;
+        scorePanel.innerHTML = "Score : "+score;
     }
 
     /**
@@ -169,7 +161,7 @@ function BoxClickerGame(){
 
         boxElement.style.left = x + "px";
         boxElement.style.top = y + "px";
-
+        boxElement.style.opacity = 1;
     };
 
     /**
