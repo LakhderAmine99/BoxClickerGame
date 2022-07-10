@@ -7,10 +7,32 @@
 html,body{
     height: 100%;
     font-family: monospace;
+    overflow: hidden;
+    user-select: none;
 }
 
 #app{
     height: 100%;
     width: 100%;
-    background-color: aliceblue;
+    background-color: rgb(14, 183, 113);
+}
+
+main{
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.box{
+    background-color: rgb(255, 43, 43);
+    cursor: pointer;
+    border-radius: 0.5rem;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.421);
+    /* box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.421); */
+    transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    /* transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
+}
+
+.box:hover{
+    opacity: 0.5;
 }
