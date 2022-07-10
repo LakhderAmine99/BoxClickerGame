@@ -17,10 +17,14 @@ function BoxClickerGame(){
      */
     let box = null;
 
+    let isClicked = false;
+
     this.run = function(){
         console.log("Box Clicker is up and running...");
 
         init();
+
+        handleEvents();
 
         let x,y;
 
@@ -29,6 +33,12 @@ function BoxClickerGame(){
             [x,y] = randomVector();
 
             updateBox(x,y);
+
+            if(isClicked){
+
+                alert("box clicked !");
+                isClicked = false;
+            }
             
         },1000);
 
@@ -85,6 +95,23 @@ function BoxClickerGame(){
 
         boxElement.style.left = x + "px";
         boxElement.style.top = y + "px";
+    };
+
+    /**
+     * 
+     */
+    function handleEvents(){
+
+        boxElement.addEventListener('click',handleBoxClick,false);
+    };
+
+    /**
+     * 
+     * @param {Event} e 
+     */
+    function handleBoxClick(e){
+
+        isClicked = true;
     };
 };
 
