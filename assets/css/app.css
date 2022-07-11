@@ -25,14 +25,10 @@ main{
 
 .box{
     background-color: rgb(255, 94, 76);
-    /* background-color: rgb(104, 222, 0); */
     cursor: pointer;
     border-radius: 0.5rem;
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.421);
-    /* box-shadow: 3px 5px 8px rgba(0, 0, 0, 0.421); */
-    /* transition: all 0.2s cubic-bezier(0.165, 0.84, 0.44, 1); */
     transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-    /* transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); */
 }
 
 .box:active{
@@ -68,7 +64,7 @@ main{
     transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.score{
+.score,.time{
     position: absolute;
     top: 0;
     right: 0;
@@ -77,6 +73,10 @@ main{
     padding: 0.8rem;
     width: fit-content;
     color: rgb(241, 241, 241);
+}
+
+.time{
+    left: 0;
 }
 
 .visible{

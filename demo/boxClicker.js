@@ -16,6 +16,11 @@ function BoxClickerGame(){
      * @type {HTMLDivElement} scorePanel
      */
     const scorePanel = document.querySelector('.score');
+    
+    /**
+     * @type {HTMLDivElement} scorePanel
+     */
+    const timerPanel = document.querySelector('.time');
 
     /**
      * @type {HTMLButtonElement} playBtn
@@ -30,12 +35,7 @@ function BoxClickerGame(){
     /**
      * @type {number}
      */
-    let playingTimeOut = null;
-    
-    /**
-     * @type {number}
-     */
-    let stopingTimeOut = null;
+    let playingTimer = null;
 
     /**
      * @type {Box} box
@@ -46,6 +46,11 @@ function BoxClickerGame(){
      * @type {number} score
      */
     let score = 0;
+
+    /**
+     * @type {Date} startTime
+     */
+    let startTime = null;
 
     this.run = function(){
         console.log("Box Clicker is up and running...");
@@ -77,7 +82,7 @@ function BoxClickerGame(){
 
         boxElement.style.opacity = 0;
 
-        playingTimeOut = window.setTimeout(function(){
+        playingTimer = window.setTimeout(function(){
             
             [x,y] = randomVector();
 
@@ -85,8 +90,28 @@ function BoxClickerGame(){
             
         },randNumber);
 
-        score += 10;
-        scorePanel.innerHTML = "Score : "+score;
+        if(startTime){
+
+            let currentTime = new Date().getTime();
+            let duration = (currentTime - startTime)/1000;
+
+            timerPanel.innerHTML = "Clicking Time : "+duration+" s";
+
+            if(duration >= 2){
+
+                score += 1;
+
+            }else if(duration < 2 && duration >= 0.5){
+
+                score += 10;
+                
+            }else{
+
+                score += 50;
+            }
+
+            scorePanel.innerHTML = "Score : "+score;
+        }
 
         return;
     }
@@ -96,8 +121,7 @@ function BoxClickerGame(){
      */
     function stopPlaying(){
         
-        window.clearTimeout(playingTimeOut);
-        window.clearTimeout(stopingTimeOut);
+        window.clearTimeout(playingTimer);
 
         pauseScreen.style.display = "block"
         playBtn.classList.add('visible');
@@ -146,6 +170,8 @@ function BoxClickerGame(){
         boxElement.style.left = x + "px";
         boxElement.style.top = y + "px";
         boxElement.style.opacity = 1;
+
+        startTime = new Date().getTime();
     };
 
     /**
@@ -165,7 +191,7 @@ function BoxClickerGame(){
      */
     function handleBoxClick(e){
 
-        window.clearTimeout(playingTimeOut);
+        window.clearTimeout(playingTimer);
 
         startPlaying();
     };
