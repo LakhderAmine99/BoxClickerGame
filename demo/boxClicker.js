@@ -28,24 +28,19 @@ function BoxClickerGame(){
     let boxElement = null;
 
     /**
-     * @type {Function}
+     * @type {number}
      */
     let playingTimeOut = null;
+    
+    /**
+     * @type {number}
+     */
+    let stopingTimeOut = null;
 
     /**
      * @type {Box} box
      */
     let box = null;
-
-    /**
-     * @type {boolean} isClicked
-     */
-    let isClicked = false;
-
-    /**
-     * @type {boolean} isGameStarted
-     */
-    let isGameStarted = false;
 
     /**
      * @type {number} score
@@ -78,6 +73,7 @@ function BoxClickerGame(){
     function startPlaying(){
 
         let x,y;
+        let randNumber = Math.floor(Math.random()*3000);
 
         boxElement.style.opacity = 0;
 
@@ -87,20 +83,10 @@ function BoxClickerGame(){
 
             updateBox(x,y);
             
-        },Math.floor(Math.random()*3000));
+        },randNumber);
 
-        if(isClicked){
-
-            isClicked = false;
-            score += 10;
-            scorePanel.innerHTML = "Score : "+score;
-
-        }else{
-
-            window.setTimeout(stopPlaying,playingTimeOut*1000 + 1000);
-        }
-
-        window.clearTimeout(playingTimeOut*2*1000);
+        score += 10;
+        scorePanel.innerHTML = "Score : "+score;
 
         return;
     }
@@ -109,14 +95,12 @@ function BoxClickerGame(){
      * 
      */
     function stopPlaying(){
-
-        isGameStarted = false;
-        
-        pauseScreen.style.display = "block"
-        playBtn.classList.add('visible');
         
         window.clearTimeout(playingTimeOut);
-        playingTimeOut = null;
+        window.clearTimeout(stopingTimeOut);
+
+        pauseScreen.style.display = "block"
+        playBtn.classList.add('visible');
         
         score = 0;
         scorePanel.innerHTML = "Score : "+score;
@@ -183,8 +167,6 @@ function BoxClickerGame(){
 
         window.clearTimeout(playingTimeOut);
 
-        isClicked = true;
-
         startPlaying();
     };
 
@@ -195,7 +177,6 @@ function BoxClickerGame(){
      */
     function handleGameStart(e){
 
-        isGameStarted = true;
         pauseScreen.style.display = "none"
         playBtn.classList.remove('visible');
 
@@ -209,7 +190,6 @@ function BoxClickerGame(){
      */
      function handleGamePause(e){
 
-        isGameStarted = false;
         pauseScreen.style.display = "block"
         playBtn.classList.add('visible');
 
