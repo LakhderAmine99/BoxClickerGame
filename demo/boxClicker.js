@@ -223,7 +223,7 @@ function BoxClickerGame(){
     };
 };
 
-const setup = (() => {
+const setup = () => {
 
     window.addEventListener('load',()=>{
 
@@ -232,4 +232,6 @@ const setup = (() => {
 
     });
     
-})();
+};
+
+setup();
